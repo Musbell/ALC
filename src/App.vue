@@ -1,28 +1,59 @@
 <template>
   <v-app light>
+    <!--<v-navigation-drawer-->
+      <!--persistent-->
+      <!--:mini-variant="miniVariant"-->
+      <!--:clipped="clipped"-->
+      <!--v-model="drawer"-->
+      <!--enable-resize-watcher-->
+    <!--&gt;-->
+      <!--<v-list >-->
+        <!--<v-list-tile-->
+          <!--value="true"-->
+          <!--v-for="(item, i) in items"-->
+          <!--:key="i"-->
+        <!--&gt;-->
+          <!--<v-list-tile-action>-->
+            <!--<v-icon dark class="text&#45;&#45;grey darken-3"  v-html="item.icon"></v-icon>-->
+          <!--</v-list-tile-action>-->
+          <!--<v-list-tile-content>-->
+            <!--<v-list-tile-title v-text="item.title"></v-list-tile-title>-->
+          <!--</v-list-tile-content>-->
+        <!--</v-list-tile>-->
+      <!--</v-list>-->
+    <!--</v-navigation-drawer>-->
     <v-navigation-drawer
       persistent
       :mini-variant="miniVariant"
       :clipped="clipped"
       v-model="drawer"
-      enable-resize-watcher
-    >
-      <v-list>
-        <v-list-tile
-          value="true"
-          v-for="(item, i) in items"
-          :key="i"
-        >
+      enable-resize-watcherw>
+      <v-toolbar flat class="transparent">
+        <v-list class="pa-0">
+          <v-list-tile avatar>
+            <v-list-tile-avatar>
+              <img src="https://www.wssu.edu/profiles/raileyt/profile.jpg" />
+            </v-list-tile-avatar>
+            <v-list-tile-content>
+              <v-list-tile-title>Lawrence Leider</v-list-tile-title>
+              <v-list-tile-sub-title> <caption>Form teacher</caption></v-list-tile-sub-title>
+            </v-list-tile-content>
+          </v-list-tile>
+        </v-list>
+      </v-toolbar>
+      <v-list class="pt-0" dense>
+        <v-divider></v-divider>
+        <v-list-tile v-for="item in items" :key="item.title" @click="">
           <v-list-tile-action>
-            <v-icon dark v-html="item.icon"></v-icon>
+            <v-icon>{{ item.icon }}</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title v-text="item.title"></v-list-tile-title>
+            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
-    <v-toolbar fixed dark class="primary">
+    <v-toolbar fixed dark class="blue darken-3">
       <v-toolbar-side-icon @click.stop="drawer = !drawer" dark></v-toolbar-side-icon>
       <v-btn
         icon
@@ -59,19 +90,23 @@
       <v-container fluid>
         <v-slide-y-transition mode="out-in">
           <v-layout column align-center>
-            <img src="/static/img/v.png" alt="Vuetify.js" class="mb-5">
-            <blockquote>
-              &#8220;First, solve the problem. Then, write the code.&#8221;
-              <footer>
-                <small>
-                  <em>&mdash;John Johnson</em>
-                </small>
-              </footer>
-            </blockquote>
+            <!-- //Todo: add main component here -->
+            <h4>Hello Bello Musa</h4>
           </v-layout>
         </v-slide-y-transition>
       </v-container>
     </main>
+    <v-btn
+      fab
+      bottom
+      right
+      class="pink"
+      dark
+      fixed
+      @click.stop="dialog = !dialog"
+    >
+      <v-icon>add</v-icon>
+    </v-btn>
     <v-navigation-drawer
       temporary
       :right="right"
@@ -96,7 +131,7 @@
   export default {
     data () {
       return {
-        clipped: false,
+        clipped: true,
         drawer: true,
         fixed: false,
         items: [
@@ -105,7 +140,7 @@
         miniVariant: false,
         right: true,
         rightDrawer: false,
-        title: 'Vuetify.js'
+        title: 'ALC Assessment test'
       }
     }
   }
