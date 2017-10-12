@@ -1,0 +1,7 @@
+{
+  allStudents{
+    id
+    firstName
+    lastName
+  }
+}
