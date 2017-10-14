@@ -1,27 +1,5 @@
 <template>
   <v-app light>
-    <!--<v-navigation-drawer-->
-    <!--persistent-->
-    <!--:mini-variant="miniVariant"-->
-    <!--:clipped="clipped"-->
-    <!--v-model="drawer"-->
-    <!--enable-resize-watcher-->
-    <!--&gt;-->
-    <!--<v-list >-->
-    <!--<v-list-tile-->
-    <!--value="true"-->
-    <!--v-for="(item, i) in items"-->
-    <!--:key="i"-->
-    <!--&gt;-->
-    <!--<v-list-tile-action>-->
-    <!--<v-icon dark class="text&#45;&#45;grey darken-3"  v-html="item.icon"></v-icon>-->
-    <!--</v-list-tile-action>-->
-    <!--<v-list-tile-content>-->
-    <!--<v-list-tile-title v-text="item.title"></v-list-tile-title>-->
-    <!--</v-list-tile-content>-->
-    <!--</v-list-tile>-->
-    <!--</v-list>-->
-    <!--</v-navigation-drawer>-->
     <v-navigation-drawer
       persistent
       :mini-variant="miniVariant"
@@ -90,23 +68,23 @@
       <v-container fluid>
         <v-slide-y-transition mode="out-in">
           <v-layout column align-center>
-            <!-- //Todo: add main component here -->
-            <Hello></Hello>
+            <Hello/>
           </v-layout>
         </v-slide-y-transition>
       </v-container>
     </main>
-    <v-btn
-      fab
-      bottom
-      right
-      class="pink"
-      dark
-      fixed
-      @click.stop="dialog = !dialog"
-    >
-      <v-icon>add</v-icon>
-    </v-btn>
+   <!--<router-link to="/add">-->
+     <!--<v-btn-->
+       <!--fab-->
+       <!--bottom-->
+       <!--right-->
+       <!--class="pink"-->
+       <!--dark-->
+       <!--fixed-->
+     <!--&gt;-->
+       <!--<v-icon>add</v-icon>-->
+     <!--</v-btn>-->
+   <!--</router-link>-->
     <v-navigation-drawer
       temporary
       :right="right"
@@ -132,7 +110,7 @@
   export default {
     data () {
       return {
-        clipped: true,
+        clipped: false,
         drawer: true,
         fixed: false,
         items: [
