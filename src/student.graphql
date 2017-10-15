@@ -1,7 +1,0 @@
-{
-  allStudents{
-    id
-    firstName
-    lastName
-  }
-}

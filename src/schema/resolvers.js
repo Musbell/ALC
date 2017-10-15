@@ -22,7 +22,7 @@ const resolvers = {
   Query: {
     allStudents: async (root,{filter, first, skip},{mongo: {Students}}) => { // 1
       let query = filter ? {$or: buildFilters(filter)} : {};
-      const cursor =Students.find(query)
+      const cursor = Students.find(query)
       if (first) {
         cursor.limit(first);
       }
@@ -35,7 +35,7 @@ const resolvers = {
   Mutation: {
     createStudent: async (root, data, {mongo: {Students}}) => {
       const response = await Students.insert(data) // 3
-      const newStudent = Object.assign({id: response.insertedIds[0]},  data) // 4
+      const newStudent = Object.assign({id: response.insertedIds[0]}, data) // 4
 
       newStudent.id = response.insertedIds[0]
       pubsub.publish('Student', {student: {mutation: 'CREATED', node: newStudent}});
