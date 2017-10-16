@@ -28,7 +28,8 @@
     "vue-apollo": "^2.1.0-rc.5",
     "vue-router": "^2.3.1",
     "vuelidate": "^0.6.1",
-    "vuetify": "^0.15.7"
+    "vuetify": "^0.15.7",
+    "graphql-tag": "latest"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
