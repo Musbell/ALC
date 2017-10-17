@@ -4,25 +4,23 @@
       <v-flex xs3>
         <form>
           <v-text-field
-            label="Email"
+            label="email"
             append-icon="email"
-            v-model="name"
-            :error-messages="nameErrors"
-            :counter="10"
-            @input="$v.name.$touch()"
-            @blur="$v.name.$touch()"
-            required
-          ></v-text-field>
-          <v-text-field
-            label="Password"
-            append-icon="https"
             v-model="email"
             :error-messages="emailErrors"
             @input="$v.email.$touch()"
             @blur="$v.email.$touch()"
             required
           ></v-text-field>
-
+          <v-text-field
+            label="Password"
+            append-icon="https"
+            v-model="password"
+            :error-messages="passwordErrors"
+            @input="$v.password.$touch()"
+            @blur="$v.password.$touch()"
+            required
+          ></v-text-field>
           <v-btn @click="submit">submit</v-btn>
           <v-btn @click="clear">clear</v-btn>
         </form>
@@ -32,63 +30,67 @@
 </template>
 
 <script>
-
+  import { USER_ID, AUTH_TOKEN } from '../constants/settings'
+  import { SIGNIN_USER_MUTATION } from '../constants/graphql'
   import { validationMixin } from 'vuelidate'
-  import { required, maxLength, email } from 'vuelidate/lib/validators'
+  import { required, minLength, email } from 'vuelidate/lib/validators'
 
   export default {
     mixins: [validationMixin],
     validations: {
-      name: { required, maxLength: maxLength(10) },
       email: { required, email },
-      select: { required },
-      checkbox: { required }
+      password: {
+        required,
+        minLength: minLength(6)
+      },
     },
     name: 'loginForm',
     data () {
       return {
-        name: '',
+        password: '',
         email: '',
-        select: null,
-        items: [
-          'Item 1',
-          'Item 2',
-          'Item 3',
-          'Item 4'
-        ],
-        checkbox: false
+        login: true
       }
     },
     methods: {
       submit () {
         this.$v.$touch()
+        const { email, password } = this.$data
+        if (this.login) {
+          this.$apollo.mutate({
+            mutation: SIGNIN_USER_MUTATION,
+            variables: {
+              email,
+              password
+            }
+          }).then((result) => {
+            location.reload(true);
+            const id = result.data.signinUser.user.id
+            const token = result.data.signinUser.token
+            this.saveUserData(id, token)
+            this.$router.push({path: '/students'})
+          }).catch((error) => {
+            alert(error)
+          })
+        }
       },
       clear () {
         this.$v.$reset()
-        this.name = ''
+        this.password = ''
         this.email = ''
-        this.select = null
-        this.checkbox = false
+      },
+      saveUserData (id, token) {
+        localStorage.setItem(USER_ID, id)
+        localStorage.setItem(AUTH_TOKEN, token)
+        this.$root.$data.userId = localStorage.getItem(USER_ID)
       }
     },
     computed: {
-      checkboxErrors () {
+      passwordErrors () {
         const errors = []
-        if (!this.$v.checkbox.$dirty) return errors
-        !this.$v.checkbox.required && errors.push('You must agree to continue!')
-        return errors
-      },
-      selectErrors () {
-        const errors = []
-        if (!this.$v.select.$dirty) return errors
-        !this.$v.select.required && errors.push('Item is required')
-        return errors
-      },
-      nameErrors () {
-        const errors = []
-        if (!this.$v.name.$dirty) return errors
-        !this.$v.name.maxLength && errors.push('Name must be at most 10 characters long')
-        !this.$v.name.required && errors.push('Name is required.')
+        if (!this.$v.password.$dirty) return errors
+        !this.$v.password.minLength && errors.push('Password must not  be less than 6 characters long')
+        !this.$v.password.required && errors.push('Password is required.')
         return errors
       },
       emailErrors () {

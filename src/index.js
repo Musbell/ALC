@@ -6,6 +6,8 @@ const buildDataloaders = require('./dataloaders');
 const express = require('express');
 const OpticsAgent = require('optics-agent');
 
+const cors = require('cors');
+
 
 // This package automatically parses JSON requests.
 const bodyParser = require('body-parser');
@@ -39,6 +41,8 @@ const start = async () => {
       schema: OpticsAgent.instrumentSchema(schema)
     };
   };
+  app.use(cors());
+  app.set('port', process.env.PORT || 3000);
   app.use(OpticsAgent.middleware());
   app.use('/graphql', bodyParser.json(), graphqlExpress(buildOptions));
 

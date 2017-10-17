@@ -5,7 +5,7 @@
       label="Search"
       prepend-icon="search"
     ></v-text-field>
-    <h4 v-if="loading">Loading...</h4>
+    <v-progress-circular indeterminate color="primary" v-if="loading"></v-progress-circular>
     <v-list two-line>
       <template>
         <!-- todo: add student detail -->

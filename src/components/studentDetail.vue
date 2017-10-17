@@ -9,7 +9,7 @@
       <v-list-tile-content>
         <v-list-tile-title>{{student.firstName}} {{student.lastName}}</v-list-tile-title>
         <v-list-tile-sub-title>
-          <span class='grey--text text--darken-2'>{{student.sessionOfAdmission}}</span> — {{student.dateOfAdmissio}}
+          <span class='grey--text text--darken-2'>{{student.sessionOfAdmission}}</span>
         </v-list-tile-sub-title>
       </v-list-tile-content>
     </v-list-tile>

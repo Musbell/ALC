@@ -4,7 +4,6 @@
     <!--     Fonts and icons     -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
     <nav class="navbar navbar-transparent navbar-absolute">
       <div class="container">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -15,7 +14,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="http://www.creative-tim.com">ALC Intermediate Web Track Assessment</a>
+          <a class="navbar-brand" href="http://www.creative-tim.com"> <v-icon x-large>school</v-icon> ALC Intermediate Web Track Assessment</a>
         </div>
 
         <div class="collapse navbar-collapse" id="navigation-example">
@@ -47,7 +46,7 @@
             <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3">
               <div class="card card-signup">
                   <div class="header header-info text-center">
-                    <v-icon>school</v-icon>
+                    <v-icon x-large>account_circle</v-icon>
                     <h4>Sign In</h4>
 
                   </div>
