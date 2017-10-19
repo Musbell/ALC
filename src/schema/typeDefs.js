@@ -33,15 +33,15 @@ type Mutation {
     otherNames: String!,
     gender: String!,
     dateOfBirth: String!,
-    nationality: String!
-    sessionOfAdmission: String!
-    dateOfAdmission: String!
-    stateOfOrigin: String!
-    religion: String!
-    address: String!
-    city: String!
-    state: String!
-    email: String
+    nationality: String!,
+    sessionOfAdmission: String!,
+    dateOfAdmission: String!,
+    stateOfOrigin: String!,
+    religion: String!,
+    address: String!,
+    city: String!,
+    state: String!,
+    email: String,
     phone: String
   ): Student
   

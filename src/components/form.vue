@@ -1,4 +1,33 @@
 <template>
+<div>
+  <v-snackbar
+    :timeout="timeout"
+    class="green lighten-1"
+    :top="y === 'top'"
+    :bottom="y === 'bottom'"
+    :right="x === 'right'"
+    :left="x === 'left'"
+    :multi-line="mode === 'multi-line'"
+    :vertical="mode === 'vertical'"
+    v-model="snackbar"
+  >
+    Student added successfully
+    <v-btn flat  @click.native="snackbar = false">Close</v-btn>
+  </v-snackbar>
+  <v-snackbar
+    :timeout="timeout"
+    class="red lighten-1"
+    :top="y === 'top'"
+    :bottom="y === 'bottom'"
+    :right="x === 'right'"
+    :left="x === 'left'"
+    :multi-line="mode === 'multi-line'"
+    :vertical="mode === 'vertical'"
+    v-model="snackbarError"
+  >
+    Problem adding student
+    <v-btn flat  @click.native="snackbarError= false">Close</v-btn>
+  </v-snackbar>
   <v-card>
     <v-card-media src="https://hdqwalls.com/wallpapers/material-design-blue-and-white-to.jpg" height="200px">
       <v-layout column align-center justify-center>
@@ -9,41 +38,6 @@
 
     <div class="container">
       <form id="form">
-        <!--<v-text-field-->
-        <!--label="Name"-->
-        <!--v-model="name"-->
-        <!--:error-messages="nameErrors"-->
-        <!--:counter="10"-->
-        <!--@input="$v.name.$touch()"-->
-        <!--@blur="$v.name.$touch()"-->
-        <!--required-->
-        <!--&gt;</v-text-field>-->
-        <!--<v-text-field-->
-        <!--label="E-mail"-->
-        <!--v-model="email"-->
-        <!--:error-messages="emailErrors"-->
-        <!--@input="$v.email.$touch()"-->
-        <!--@blur="$v.email.$touch()"-->
-        <!--required-->
-        <!--&gt;</v-text-field>-->
-        <!--<v-select-->
-        <!--label="Item"-->
-        <!--v-model="select"-->
-        <!--:items="items"-->
-        <!--:error-messages="selectErrors"-->
-        <!--@change="$v.select.$touch()"-->
-        <!--@blur="$v.select.$touch()"-->
-        <!--required-->
-        <!--&gt;</v-select>-->
-        <!--<v-checkbox-->
-        <!--label="Do you agree?"-->
-        <!--v-model="checkbox"-->
-        <!--:error-messages="checkboxErrors"-->
-        <!--@change="$v.checkbox.$touch()"-->
-        <!--@blur="$v.checkbox.$touch()"-->
-        <!--required-->
-        <!--&gt;</v-checkbox>-->
-
         <v-container grid-list-md>
           <v-layout row wrap>
             <v-flex xs6>
@@ -51,7 +45,6 @@
                 label="Last name"
                 v-model="lastName"
                 :error-messages="lastNameErrors"
-                :counter="10"
                 @input="$v.lastName.$touch()"
                 @blur="$v.lastName.$touch()"
                 required
@@ -62,7 +55,6 @@
                 label="First name"
                 v-model="firstName"
                 :error-messages="firstNameErrors"
-                :counter="10"
                 @input="$v.firstName.$touch()"
                 @blur="$v.firstName.$touch()"
                 required
@@ -75,7 +67,6 @@
                 label="Other name"
                 v-model="otherName"
                 :error-messages="otherNameErrors"
-                :counter="10"
                 @input="$v.otherName.$touch()"
                 @blur="$v.otherName.$touch()"
                 required
@@ -104,15 +95,15 @@
                 <v-text-field
                   slot="activator"
                   label="Date of birth"
-                  v-model="date"
+                  v-model="dateOfBirth"
                   prepend-icon="event"
                   readonly
                   :error-messages="dateOfBirthErrors"
-                  @change="$v.date.$touch()"
-                  @blur="$v.date.$touch()"
+                  @change="$v.dateOfBirth.$touch()"
+                  @blur="$v.dateOfBirth.$touch()"
                   required
                 ></v-text-field>
-                <v-date-picker v-model="date" scrollable actions>
+                <v-date-picker v-model="dateOfBirth" scrollable actions>
                   <template scope="{ save, cancel }">
                     <v-card-actions>
                       <v-spacer></v-spacer>
@@ -138,48 +129,39 @@
           </v-layout>
           <v-layout row wrap>
             <v-flex xs6>
-              <v-text-field
-                label="Last name"
-                v-model="name"
-                :error-messages="nameErrors"
-                :counter="10"
-                @input="$v.name.$touch()"
-                @blur="$v.name.$touch()"
+              <v-select
+                label="Session of admission"
+                v-model="sessionOfAdmission"
+                :items="sessionOfAdmissionEnum"
+                :error-messages="sessionOfAdmissionErrors"
+                @change="$v.sessionOfAdmission.$touch()"
+                @blur="$v.sessionOfAdmission.$touch()"
                 required
-              ></v-text-field>
+              ></v-select>
             </v-flex>
             <v-flex xs6>
-              <v-text-field
-                label="First name"
-                v-model="name"
-                :error-messages="nameErrors"
-                :counter="10"
-                @input="$v.name.$touch()"
-                @blur="$v.name.$touch()"
-                required
-              ></v-text-field>
-            </v-flex>
-          </v-layout>
-          <v-layout row wrap>
-            <v-flex xs6>
-              <v-dialog
-                persistent
-                v-model="modal"
+              <v-menu
                 lazy
+                :close-on-content-click="false"
+                v-model="menu"
+                transition="scale-transition"
+                offset-y
                 full-width
+                :nudge-right="40"
+                max-width="290px"
+                min-width="290px"
+                :error-messages="dateOfAdmissionErrors"
+                @change="$v.dateOfAdmission.$touch()"
+                @blur="$v.dateOfAdmission.$touch()"
               >
                 <v-text-field
                   slot="activator"
                   label="Date of admission"
-                  v-model="date"
+                  v-model=" dateOfAdmission"
                   prepend-icon="event"
                   readonly
-                  :error-messages=" dateOfAdmissionErrors"
-                  @change="$v. dateOfAdmission.$touch()"
-                  @blur="$v. dateOfAdmission.$touch()"
-                  required
                 ></v-text-field>
-                <v-date-picker v-model="date" scrollable actions>
+                <v-date-picker v-model="dateOfAdmission" no-title scrollable actions>
                   <template scope="{ save, cancel }">
                     <v-card-actions>
                       <v-spacer></v-spacer>
@@ -188,88 +170,88 @@
                     </v-card-actions>
                   </template>
                 </v-date-picker>
-              </v-dialog>
+              </v-menu>
+            </v-flex>
+          </v-layout>
+          <v-layout row wrap>
+            <v-flex xs6>
+              <v-select
+                label="State of origin"
+                v-model="stateOfOrigin"
+                :items="stateEnum"
+                :error-messages=" stateOfOriginErrors"
+                @change="$v.stateOfOrigin.$touch()"
+                @blur="$v.stateOfOrigin.$touch()"
+                required
+              ></v-select>
+            </v-flex>
+            <v-flex xs6>
+              <v-select
+                label="religion"
+                v-model="religion"
+                :items="religionEnum"
+                :error-messages="religionErrors"
+                @change="$v.religion.$touch()"
+                @blur="$v.religion.$touch()"
+                required
+              ></v-select>
+            </v-flex>
+          </v-layout>
+          <v-layout row wrap>
+            <v-flex xs6>
+              <v-text-field
+                label="Phone number"
+                v-model="phone"
+                :error-messages="phoneErrors"
+                :counter="11"
+                @input="$v.phone.$touch()"
+                @blur="$v.phone.$touch()"
+                required
+              ></v-text-field>
             </v-flex>
             <v-flex xs6>
               <v-text-field
-                label="First name"
-                v-model="name"
-                :error-messages="nameErrors"
-                :counter="10"
-                @input="$v.name.$touch()"
-                @blur="$v.name.$touch()"
+                label="city"
+                v-model="city"
+                :error-messages="cityErrors"
+                @input="$v.city.$touch()"
+                @blur="$v.city.$touch()"
                 required
               ></v-text-field>
             </v-flex>
           </v-layout>
           <v-layout row wrap>
             <v-flex xs6>
-              <v-text-field
-                label="Last name"
-                v-model="name"
-                :error-messages="nameErrors"
-                :counter="10"
-                @input="$v.name.$touch()"
-                @blur="$v.name.$touch()"
+              <v-select
+                label="State"
+                v-model="state"
+                :items="stateEnum"
+                :error-messages=" stateErrors"
+                @change="$v.state.$touch()"
+                @blur="$v.state.$touch()"
                 required
-              ></v-text-field>
+              ></v-select>
             </v-flex>
             <v-flex xs6>
               <v-text-field
-                label="First name"
-                v-model="name"
-                :error-messages="nameErrors"
-                :counter="10"
-                @input="$v.name.$touch()"
-                @blur="$v.name.$touch()"
-                required
-              ></v-text-field>
-            </v-flex>
-          </v-layout>
-          <v-layout row wrap>
-            <v-flex xs6>
-              <v-text-field
-                label="Last name"
-                v-model="name"
-                :error-messages="nameErrors"
-                :counter="10"
-                @input="$v.name.$touch()"
-                @blur="$v.name.$touch()"
-                required
-              ></v-text-field>
-            </v-flex>
-            <v-flex xs6>
-              <v-text-field
-                label="First name"
-                v-model="name"
-                :error-messages="nameErrors"
-                :counter="10"
-                @input="$v.name.$touch()"
-                @blur="$v.name.$touch()"
+                label="E-mail"
+                v-model="email"
+                :error-messages="emailErrors"
+                @input="$v.email.$touch()"
+                @blur="$v.email.$touch()"
                 required
               ></v-text-field>
             </v-flex>
           </v-layout>
           <v-layout row wrap>
-            <v-flex xs6>
+            <v-flex xs12>
               <v-text-field
-                label="Last name"
-                v-model="name"
-                :error-messages="nameErrors"
-                :counter="10"
-                @input="$v.name.$touch()"
-                @blur="$v.name.$touch()"
-                required
-              ></v-text-field>
-            </v-flex>
-            <v-flex xs6>
-              <v-text-field
-                label="First name"
-                v-model="name"
-                :error-messages="nameErrors"
-                :counter="10"
-                @input="$v.name.$touch()"
-                @blur="$v.name.$touch()"
+                label="Address"
+                v-model="address"
+                :error-messages="addressErrors"
+                @input="$v.address.$touch()"
+                @blur="$v.address.$touch()"
+                multi-line
                 required
               ></v-text-field>
             </v-flex>
@@ -281,18 +263,20 @@
       </form>
     </div>
   </v-card>
+</div>
 </template>
 
 <script>
+  import { CREATE_STUDENT_MUTATION, ALL_STUDENTS_QUERY } from '../constants/graphql'
   import { validationMixin } from 'vuelidate'
-  import { required, maxLength, email } from 'vuelidate/lib/validators'
+  import { required, maxLength, email, numeric } from 'vuelidate/lib/validators'
 
   export default {
     mixins: [validationMixin],
     validations: {
-      lastName: { required, maxLength: maxLength(10) },
-      firstName: { required, maxLength: maxLength(10) },
-      otherName: { required, maxLength: maxLength(10) },
+      lastName: { required },
+      firstName: { required },
+      otherName: { required },
       gender: { required },
       dateOfBirth: { required },
       nationality: { required },
@@ -304,13 +288,13 @@
       city: {required},
       state: {required},
       email: { required, email },
-      phone: { required }
+      phone: { required,numeric, maxLength: maxLength(11) }
     },
     data () {
       return {
         lastName: '',
         firstName: '',
-        otherName: '',
+        otherNames: '',
         dateOfBirth: null,
         gender: null,
         nationality: null,
@@ -330,14 +314,80 @@
         nationalityEnum: [
           'Nigeria'
         ],
-        date: null,
+        sessionOfAdmissionEnum: [
+          '2005/2006',
+          '2006/2007',
+          '2007/208',
+          '2008/2009',
+          '2009/2010'
+        ],
+        stateEnum: [
+          'kano',
+          'lagos',
+          'Abuja'
+        ],
+        religionEnum: [
+          'Islam',
+          'Christianity',
+          'Others'
+        ],
         menu: false,
-        modal: false
+        modal: false,
+        snackbar: false,
+        snackbarError: false,
+        color: 'success',
+        y: 'top',
+        x: 'right',
+        mode: '',
+        timeout: 6000,
+        text: 'Hello, I\'m a snackbar'
       }
     },
     methods: {
       submit () {
         this.$v.$touch()
+        const {
+          lastName,
+          firstName,
+          otherNames,
+          gender,
+          dateOfBirth,
+          nationality,
+          sessionOfAdmission,
+          dateOfAdmission,
+          stateOfOrigin,
+          religion,
+          address,
+          city,
+          state,
+          email,
+          phone
+        } = this.$data
+        this.$apollo.mutate({
+          mutation: CREATE_STUDENT_MUTATION,
+          variables: {
+            lastName,
+            firstName,
+            otherNames,
+            gender,
+            dateOfBirth,
+            nationality,
+            sessionOfAdmission,
+            dateOfAdmission,
+            stateOfOrigin,
+            religion,
+            address,
+            city,
+            state,
+            email,
+            phone
+          }
+        }).then(() => {
+          this.snackbar = true
+          return this.clear()
+        }).catch(() => {
+          this.snackbarError = true
+        })
       },
       clear () {
         this.$v.$reset()
@@ -359,30 +409,21 @@
       }
     },
     computed: {
-//      selectErrors () {
-//        const errors = []
-//        if (!this.$v.select.$dirty) return errors
-//        !this.$v.select.required && errors.push('Item is required')
-//        return errors
-//      },
       lastNameErrors () {
         const errors = []
         if (!this.$v.lastName.$dirty) return errors
-        !this.$v.lastName.maxLength && errors.push('last name must be at most 10 characters long')
         !this.$v.lastName.required && errors.push('Last name is required.')
         return errors
       },
       firstNameErrors () {
         const errors = []
         if (!this.$v.lastName.$dirty) return errors
-        !this.$v.firstName.maxLength && errors.push('First name must be at most 10 characters long')
         !this.$v.firstName.required && errors.push('First name is required.')
         return errors
       },
       otherNameErrors () {
         const errors = []
         if (!this.$v.otherName.$dirty) return errors
-        !this.$v.otherName.maxLength && errors.push('Other name must be at most 10 characters long')
         !this.$v.otherName.required && errors.push('Other name is required.')
         return errors
       },
@@ -431,13 +472,13 @@
       addressErrors () {
         const errors = []
         if (!this.$v.address.$dirty) return errors
-        !this.$v.address.required && errors.push('Address of origin is required.')
+        !this.$v.address.required && errors.push('Address is required.')
         return errors
       },
       cityErrors () {
         const errors = []
         if (!this.$v.city.$dirty) return errors
-        !this.$v.city.required && errors.push('City of origin is required.')
+        !this.$v.city.required && errors.push('City is required.')
         return errors
       },
       stateErrors () {
@@ -456,6 +497,8 @@
       phoneErrors () {
         const errors = []
         if (!this.$v.phone.$dirty) return errors
+        !this.$v.phone.numeric && errors.push('Must be valid phone number')
+        !this.$v.phone.maxLength && errors.push('Phone number must be at most 11 characters long')
         !this.$v.phone.required && errors.push('Phone of origin is required.')
         return errors
       }
@@ -469,7 +512,5 @@
     border-radius: 50%;
     box-shadow: 0 16px 38px -12px rgba(0, 0, 0, 0.56), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);;
   }
-  #form{
-    zoom: 90%;
-  }
+
 </style>

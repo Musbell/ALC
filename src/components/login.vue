@@ -20,6 +20,16 @@
         <div class="collapse navbar-collapse" id="navigation-example">
           <ul class="nav navbar-nav navbar-right">
             <li>
+              <a href="../components-documentation.html" target="_blank">
+                Components
+              </a>
+            </li>
+            <li>
+              <a href="http://demos.creative-tim.com/material-kit-pro/presentation.html?ref=utp-freebie" target="_blank">
+                <i class="material-icons">unarchive</i> Upgrade to PRO
+              </a>
+            </li>
+            <li>
               <a href="https://twitter.com/CreativeTim" target="_blank" class="btn btn-simple btn-white btn-just-icon">
                 <i class="fa fa-twitter"></i>
               </a>
@@ -118,4 +128,5 @@ export default {
   #form {
     padding-left: 20px;
   }
+
 </style>

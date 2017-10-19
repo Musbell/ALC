@@ -1,6 +1,5 @@
 <template>
   <div>
-    <v-subheader>student list</v-subheader>
     <v-divider v-bind="divider" v-bind:inset="inset"></v-divider>
     <v-list-tile avatar  @click="">
       <v-list-tile-avatar>
