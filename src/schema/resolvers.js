@@ -1,3 +1,4 @@
+const ObjectId = require('mongodb')
 const pubsub = require('../pubsub');
 
 
@@ -30,6 +31,9 @@ const resolvers = {
         cursor.skip(skip);
       }
       return cursor.toArray();
+    },
+    Student: async (root, {id}, {mongo: {Students}}) => {
+       return await Students.findOne(ObjectId(id))
     }
   },
   Mutation: {

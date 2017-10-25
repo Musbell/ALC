@@ -1,14 +1,25 @@
 import gql from 'graphql-tag'
 
-export const ALL_STUDENTS_QUERY = gql`
-  query AllStudentsQuery {
-    allStudents {
+export const STUDENT_QUERY = gql`
+  query StudentQuery($id: ID!) {
+    Student(id: $id) {
       id
-      firstName
       lastName
-      dateOfAdmission
+      firstName
+      otherName
+      gender
+      dateOfBirth
+      nationality
       sessionOfAdmission
-      
+      dateOfAdmission
+      stateOfOrigin
+      religion
+      address
+      city
+      state
+      email
+      phone
+
     }
   }
 `
@@ -30,9 +41,9 @@ export const SIGNIN_USER_MUTATION = gql`
 export const CREATE_STUDENT_MUTATION = gql`
   # 2
   mutation CreateStudentMutation(
-  $lastName: String!, 
+  $lastName: String!,
   $firstName: String!,
-  $otherNames: String!,
+  $otherName: String!,
   $gender: String!,
   $dateOfBirth: String!,
   $nationality: String!,
@@ -43,13 +54,13 @@ export const CREATE_STUDENT_MUTATION = gql`
   $address: String!,
   $city: String!,
   $state: String!,
-  $email: String,
-  $phone: String
+  $email: String!,
+  $phone: String!
   ) {
     createStudent(
       lastName: $lastName,
       firstName: $firstName,
-      otherNames: $otherNames,
+      otherName: $otherName,
       gender:$gender,
       dateOfBirth:$dateOfBirth,
       nationality:$nationality,

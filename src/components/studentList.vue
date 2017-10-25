@@ -1,4 +1,5 @@
 <template>
+  <transition appear>
   <v-card>
     <v-text-field
       solo
@@ -26,11 +27,12 @@
       </template>
     </v-list>
   </v-card>
+  </transition>
 </template>
 
 <script>
   import StudentDetail from './studentDetail.vue'
-  import {ALL_STUDENTS_QUERY, ALL_STUDENTS_SEARCH_QUERY } from '../constants/graphql'
+  import { ALL_STUDENTS_SEARCH_QUERY } from '../constants/graphql'
   export default {
     name: 'studentList',
     data () {

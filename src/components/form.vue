@@ -28,6 +28,7 @@
     Problem adding student
     <v-btn flat  @click.native="snackbarError= false">Close</v-btn>
   </v-snackbar>
+  <transition appear>
   <v-card>
     <v-card-media src="https://hdqwalls.com/wallpapers/material-design-blue-and-white-to.jpg" height="200px">
       <v-layout column align-center justify-center>
@@ -263,6 +264,7 @@
       </form>
     </div>
   </v-card>
+  </transition>
 </div>
 </template>
 
@@ -272,6 +274,7 @@
   import { required, maxLength, email, numeric } from 'vuelidate/lib/validators'
 
   export default {
+    name: "addStudent",
     mixins: [validationMixin],
     validations: {
       lastName: { required },
@@ -294,7 +297,7 @@
       return {
         lastName: '',
         firstName: '',
-        otherNames: '',
+        otherName: '',
         dateOfBirth: null,
         gender: null,
         nationality: null,
@@ -349,7 +352,7 @@
         const {
           lastName,
           firstName,
-          otherNames,
+          otherName,
           gender,
           dateOfBirth,
           nationality,
@@ -368,7 +371,7 @@
           variables: {
             lastName,
             firstName,
-            otherNames,
+            otherName,
             gender,
             dateOfBirth,
             nationality,
@@ -385,8 +388,9 @@
         }).then(() => {
           this.snackbar = true
           return this.clear()
-        }).catch(() => {
-          this.snackbarError = true
+        }).catch((err) => {
+//          this.snackbarError = true
+          alert(err)
         })
       },
       clear () {

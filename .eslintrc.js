@@ -8,6 +8,8 @@ module.exports = {
   },
   env: {
     browser: true,
+    "node": true,
+    "es6": true
   },
   // https://github.com/feross/standard/blob/master/RULES.md#javascript-standard-style
   extends: 'standard',
@@ -22,6 +24,8 @@ module.exports = {
     // allow async-await
     'generator-star-spacing': 0,
     // allow debugger during development
-    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0
+    'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
+    "vars-on-top": 2,
+    "no-undef": 2
   }
 }

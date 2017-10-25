@@ -111,13 +111,13 @@
     name: 'main',
     data () {
       return {
-        clipped: false,
+        clipped: true,
         drawer: true,
         fixed: false,
         items: [
           { icon: 'bubble_chart', title: 'Inspire' }
         ],
-        miniVariant: false,
+        miniVariant: true,
         right: true,
         rightDrawer: false,
         title: 'ALC Intermediate Web Track Assessment'

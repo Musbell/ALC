@@ -1,8 +1,6 @@
-mutation{
-  signinUser(email: {
-    email: "musbell007@gmail.com",
-    password: "test123"
-  }) {
-    token
+{
+  Student(id: "59d96cdd29c3e972530d98c0"){
+    id
+    firstName
   }
 }

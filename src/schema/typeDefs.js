@@ -20,6 +20,7 @@ type Student {
 }
 type Query {
   allStudents(filter: StudentFilter, skip: Int, first: Int): [Student!]!
+  Student(id: ID!): Student
 }
 input StudentFilter {
   OR: [StudentFilter!]
