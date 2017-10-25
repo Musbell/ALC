@@ -5,7 +5,9 @@
         <StudentList/>
       </v-flex>
       <v-flex xs8>
-        <router-view></router-view>
+        <transition name="view" mode="out-in" appear>
+          <router-view :key="$route.fullPath"></router-view>
+        </transition>
       </v-flex>
     </v-layout>
   </v-container>

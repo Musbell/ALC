@@ -1,7 +1,8 @@
 <template>
 
    <div>
-     <v-progress-circular indeterminate color="primary" v-if="loading"></v-progress-circular>
+     <!--<v-progress-circular indeterminate color="primary" v-if="loading"></v-progress-circular>-->
+     <!--<v-progress-linear v-bind:indeterminate="true" v-if="loading"></v-progress-linear>-->
      <v-snackbar
       :timeout="timeout"
       class="green lighten-1"
@@ -298,7 +299,6 @@
     data () {
       return {
         Student: {},
-        id: '',
         routeParam: this.$route.params.id,
         loading: 0,
         lastName: '',
@@ -360,9 +360,6 @@
             id: this.routeParam
           }
         }
-      },
-      route: {
-        canReuse: false,
       },
       methods: {
         submit () {
