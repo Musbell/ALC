@@ -5,7 +5,9 @@
       :mini-variant="miniVariant"
       :clipped="clipped"
       v-model="drawer"
-      enable-resize-watcherw>
+      enable-resize-watcherw
+      dark
+    >
       <v-toolbar flat class="transparent">
         <v-list class="pa-0">
           <v-list-tile avatar>
@@ -21,12 +23,20 @@
       </v-toolbar>
       <v-list class="pt-0" dense>
         <v-divider></v-divider>
-        <v-list-tile v-for="item in items" :key="item.title" @click="">
+        <v-list-tile @click="">
           <v-list-tile-action>
-            <v-icon>{{ item.icon }}</v-icon>
+            <v-icon dark>home</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+            <v-list-tile-title>Home</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        <v-list-tile @click="">
+          <v-list-tile-action>
+            <v-icon dark>dashboard</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Dashboard</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -61,44 +71,47 @@
         dark
         @click.stop="rightDrawer = !rightDrawer"
       >
-        <v-icon>menu</v-icon>
+        <v-icon light>code</v-icon>
       </v-btn>
     </v-toolbar>
     <main>
       <v-container fluid>
         <v-slide-y-transition mode="out-in">
           <v-layout column align-center>
-            <Hello/>
+            <Body/>
           </v-layout>
         </v-slide-y-transition>
       </v-container>
     </main>
-    <!--<router-link to="/add">-->
-    <!--<v-btn-->
-    <!--fab-->
-    <!--bottom-->
-    <!--right-->
-    <!--class="pink"-->
-    <!--dark-->
-    <!--fixed-->
-    <!--&gt;-->
-    <!--<v-icon>add</v-icon>-->
-    <!--</v-btn>-->
-    <!--</router-link>-->
-    <v-navigation-drawer
-      temporary
-      :right="right"
-      v-model="rightDrawer"
+    <div v-if="this.$route.path != '/students'">
+      <router-link to="/students">
+    <v-btn
+    fab
+    bottom
+    right
+    class="pink"
+    dark
+    fixed
     >
-      <v-list>
-        <v-list-tile @click="right = !right">
-          <v-list-tile-action>
-            <v-icon light>compare_arrows</v-icon>
-          </v-list-tile-action>
-          <v-list-tile-title>Switch drawer (click me)</v-list-tile-title>
-        </v-list-tile>
-      </v-list>
-    </v-navigation-drawer>
+    <v-icon>add</v-icon>
+    </v-btn>
+    </router-link>
+    </div>
+    <!--<v-navigation-drawer-->
+      <!--temporary-->
+      <!--:right="right"-->
+      <!--v-model="rightDrawer"-->
+      <!--dark-->
+    <!--&gt;-->
+      <!--<v-list>-->
+        <!--<v-list-tile @click="right = !right">-->
+          <!--<v-list-tile-action>-->
+            <!--<v-icon light>compare_arrows</v-icon>-->
+          <!--</v-list-tile-action>-->
+          <!--<v-list-tile-title>Switch drawer (click me)</v-list-tile-title>-->
+        <!--</v-list-tile>-->
+      <!--</v-list>-->
+    <!--</v-navigation-drawer>-->
     <v-footer :fixed="fixed" light>
       <span>&copy; 2017</span>
     </v-footer>
@@ -106,7 +119,7 @@
 </template>
 
 <script>
-  import Hello from './Hello.vue'
+  import Body from './Body.vue'
   export default {
     name: 'main',
     data () {
@@ -115,7 +128,7 @@
         drawer: true,
         fixed: false,
         items: [
-          { icon: 'bubble_chart', title: 'Inspire' }
+          { icon: 'home', title: 'Home' },
         ],
         miniVariant: true,
         right: true,
@@ -124,7 +137,7 @@
       }
     },
     components: {
-      Hello
+      Body
     }
   }
 </script>

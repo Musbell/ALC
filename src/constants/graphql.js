@@ -24,20 +24,12 @@ export const STUDENT_QUERY = gql`
   }
 `
 
-
-export const SIGNIN_USER_MUTATION = gql`
-  mutation SigninUserMutation($email: String!, $password: String!) {
-    signinUser(email: {
-      email: $email,
-      password: $password
-    }) {
-      token
-      user {
-        id
-      }
-    }
+export const DELETE_STUDENT_MUTATION = gql`
+  mutation DeleteStudentMutation($id: ID!) {
+    deleteStudent(id: $id)
   }
 `
+
 export const CREATE_STUDENT_MUTATION = gql`
   # 2
   mutation CreateStudentMutation(
@@ -79,16 +71,48 @@ export const CREATE_STUDENT_MUTATION = gql`
   }
 `
 
+export const UPDATE_STUDENT_MUTATION = gql`  
+  mutation UpdatetudentMutation(
+  $id: ID!,
+  $newLastName: String,
+  $newFirstName: String,
+  $newOtherName: String,
+  $newGender: String,
+  $newDateOfBirth: String,
+  $newNationality: String,
+  $newSessionOfAdmission: String,
+  $newDateOfAdmission: String,
+  $newStateOfOrigin: String,
+  $newReligion: String,
+  $newAddress: String,
+  $newCity: String,
+  $newState: String,
+  $newEmail: String,
+  $newPhone: String,
+  ) {
+    updateStudent(
+      id: $id,
+      newLastName: $newLastName,
+      newFirstName:  $newFirstName,
+      newOtherName: $newOtherName,
+      newGender: $newGender,
+      newDateOfBirth: $newDateOfBirth,
+      newNationality: $newNationality,
+      newSessionOfAdmission: $newSessionOfAdmission,
+      newDateOfAdmission: $newDateOfAdmission,
+      newStateOfOrigin: $newStateOfOrigin,
+      newReligion: $newReligion,
+      newAddress: $newAddress,
+      newCity: $newCity,
+      newState: $newState,
+      newEmail: $newEmail,
+      newPhone: $newPhone
+    )
+  }
+`
 export const ALL_STUDENTS_SEARCH_QUERY = gql`
-  query AllStudentsSearchQuery($searchText: String!) {
-    allStudents(filter: {
-      OR: [{
-        firstName_contains: $searchText
-      }, {
-        lastName_contains: $searchText
-      },
-      ]
-    }) {
+  query AllStudentsSearchQuery{
+    allStudents{
       id
       firstName
       lastName

@@ -1,271 +1,283 @@
 <template>
-<div>
-  <v-snackbar
-    :timeout="timeout"
-    class="green lighten-1"
-    :top="y === 'top'"
-    :bottom="y === 'bottom'"
-    :right="x === 'right'"
-    :left="x === 'left'"
-    :multi-line="mode === 'multi-line'"
-    :vertical="mode === 'vertical'"
-    v-model="snackbar"
-  >
-    Student added successfully
-    <v-btn flat  @click.native="snackbar = false">Close</v-btn>
-  </v-snackbar>
-  <v-snackbar
-    :timeout="timeout"
-    class="red lighten-1"
-    :top="y === 'top'"
-    :bottom="y === 'bottom'"
-    :right="x === 'right'"
-    :left="x === 'left'"
-    :multi-line="mode === 'multi-line'"
-    :vertical="mode === 'vertical'"
-    v-model="snackbarError"
-  >
-    Problem adding student
-    <v-btn flat  @click.native="snackbarError= false">Close</v-btn>
-  </v-snackbar>
-  <transition appear>
-  <v-card>
-    <v-card-media src="https://hdqwalls.com/wallpapers/material-design-blue-and-white-to.jpg" height="200px">
-      <v-layout column align-center justify-center>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" alt=""
-             id="profile">
-      </v-layout>
-    </v-card-media>
+  <div>
+    <v-snackbar
+      :timeout="timeout"
+      class="green lighten-1"
+      :top="y === 'top'"
+      :bottom="y === 'bottom'"
+      :right="x === 'right'"
+      :left="x === 'left'"
+      :multi-line="mode === 'multi-line'"
+      :vertical="mode === 'vertical'"
+      v-model="snackbar"
+    >
+      Student added successfully
+      <v-btn flat  @click.native="snackbar = false">Close</v-btn>
+    </v-snackbar>
+    <v-snackbar
+      :timeout="timeout"
+      class="red lighten-1"
+      :top="y === 'top'"
+      :bottom="y === 'bottom'"
+      :right="x === 'right'"
+      :left="x === 'left'"
+      :multi-line="mode === 'multi-line'"
+      :vertical="mode === 'vertical'"
+      v-model="snackbarError"
+    >
+      Problem adding student
+      <v-btn flat  @click.native="snackbarError= false">Close</v-btn>
+    </v-snackbar>
+    <transition appear>
+      <v-card>
+        <v-card-media src="https://hdqwalls.com/wallpapers/material-design-blue-and-white-to.jpg" height="200px">
+          <v-layout column align-center justify-center>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png" alt=""
+                 id="profile">
+          </v-layout>
+        </v-card-media>
 
-    <div class="container">
-      <form id="form">
-        <v-container grid-list-md>
-          <v-layout row wrap>
-            <v-flex xs6>
-              <v-text-field
-                label="Last name"
-                v-model="lastName"
-                :error-messages="lastNameErrors"
-                @input="$v.lastName.$touch()"
-                @blur="$v.lastName.$touch()"
-                required
-              ></v-text-field>
-            </v-flex>
-            <v-flex xs6>
-              <v-text-field
-                label="First name"
-                v-model="firstName"
-                :error-messages="firstNameErrors"
-                @input="$v.firstName.$touch()"
-                @blur="$v.firstName.$touch()"
-                required
-              ></v-text-field>
-            </v-flex>
-          </v-layout>
-          <v-layout row wrap>
-            <v-flex xs6>
-              <v-text-field
-                label="Other name"
-                v-model="otherName"
-                :error-messages="otherNameErrors"
-                @input="$v.otherName.$touch()"
-                @blur="$v.otherName.$touch()"
-                required
-              ></v-text-field>
-            </v-flex>
-            <v-flex xs6>
-              <v-select
-                label="Gender"
-                v-model="gender"
-                :items="genderEnum"
-                :error-messages="genderErrors"
-                @change="$v.gender.$touch()"
-                @blur="$v.gender.$touch()"
-                required
-              ></v-select>
-            </v-flex>
-          </v-layout>
-          <v-layout row wrap>
-            <v-flex xs6>
-              <v-dialog
-                persistent
-                v-model="modal"
-                lazy
-                full-width
-              >
-                <v-text-field
-                  slot="activator"
-                  label="Date of birth"
-                  v-model="dateOfBirth"
-                  prepend-icon="event"
-                  readonly
-                  :error-messages="dateOfBirthErrors"
-                  @change="$v.dateOfBirth.$touch()"
-                  @blur="$v.dateOfBirth.$touch()"
-                  required
-                ></v-text-field>
-                <v-date-picker v-model="dateOfBirth" scrollable actions>
-                  <template scope="{ save, cancel }">
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn flat color="primary" @click="cancel">Cancel</v-btn>
-                      <v-btn flat color="primary" @click="save">OK</v-btn>
-                    </v-card-actions>
-                  </template>
-                </v-date-picker>
-              </v-dialog>
-            </v-flex>
-            <v-flex xs6>
-              <v-select
-                label="Nationality"
-                prepend-icon="map"
-                v-model="nationality"
-                :items="nationalityEnum"
-                :error-messages="nationalityErrors"
-                @change="$v.nationality.$touch()"
-                @blur="$v.nationality.$touch()"
-                required
-              ></v-select>
-            </v-flex>
-          </v-layout>
-          <v-layout row wrap>
-            <v-flex xs6>
-              <v-select
-                label="Session of admission"
-                v-model="sessionOfAdmission"
-                :items="sessionOfAdmissionEnum"
-                :error-messages="sessionOfAdmissionErrors"
-                @change="$v.sessionOfAdmission.$touch()"
-                @blur="$v.sessionOfAdmission.$touch()"
-                required
-              ></v-select>
-            </v-flex>
-            <v-flex xs6>
-              <v-menu
-                lazy
-                :close-on-content-click="false"
-                v-model="menu"
-                transition="scale-transition"
-                offset-y
-                full-width
-                :nudge-right="40"
-                max-width="290px"
-                min-width="290px"
-                :error-messages="dateOfAdmissionErrors"
-                @change="$v.dateOfAdmission.$touch()"
-                @blur="$v.dateOfAdmission.$touch()"
-              >
-                <v-text-field
-                  slot="activator"
-                  label="Date of admission"
-                  v-model=" dateOfAdmission"
-                  prepend-icon="event"
-                  readonly
-                ></v-text-field>
-                <v-date-picker v-model="dateOfAdmission" no-title scrollable actions>
-                  <template scope="{ save, cancel }">
-                    <v-card-actions>
-                      <v-spacer></v-spacer>
-                      <v-btn flat color="primary" @click="cancel">Cancel</v-btn>
-                      <v-btn flat color="primary" @click="save">OK</v-btn>
-                    </v-card-actions>
-                  </template>
-                </v-date-picker>
-              </v-menu>
-            </v-flex>
-          </v-layout>
-          <v-layout row wrap>
-            <v-flex xs6>
-              <v-select
-                label="State of origin"
-                v-model="stateOfOrigin"
-                :items="stateEnum"
-                :error-messages=" stateOfOriginErrors"
-                @change="$v.stateOfOrigin.$touch()"
-                @blur="$v.stateOfOrigin.$touch()"
-                required
-              ></v-select>
-            </v-flex>
-            <v-flex xs6>
-              <v-select
-                label="religion"
-                v-model="religion"
-                :items="religionEnum"
-                :error-messages="religionErrors"
-                @change="$v.religion.$touch()"
-                @blur="$v.religion.$touch()"
-                required
-              ></v-select>
-            </v-flex>
-          </v-layout>
-          <v-layout row wrap>
-            <v-flex xs6>
-              <v-text-field
-                label="Phone number"
-                v-model="phone"
-                :error-messages="phoneErrors"
-                :counter="11"
-                @input="$v.phone.$touch()"
-                @blur="$v.phone.$touch()"
-                required
-              ></v-text-field>
-            </v-flex>
-            <v-flex xs6>
-              <v-text-field
-                label="city"
-                v-model="city"
-                :error-messages="cityErrors"
-                @input="$v.city.$touch()"
-                @blur="$v.city.$touch()"
-                required
-              ></v-text-field>
-            </v-flex>
-          </v-layout>
-          <v-layout row wrap>
-            <v-flex xs6>
-              <v-select
-                label="State"
-                v-model="state"
-                :items="stateEnum"
-                :error-messages=" stateErrors"
-                @change="$v.state.$touch()"
-                @blur="$v.state.$touch()"
-                required
-              ></v-select>
-            </v-flex>
-            <v-flex xs6>
-              <v-text-field
-                label="E-mail"
-                v-model="email"
-                :error-messages="emailErrors"
-                @input="$v.email.$touch()"
-                @blur="$v.email.$touch()"
-                required
-              ></v-text-field>
-            </v-flex>
-          </v-layout>
-          <v-layout row wrap>
-            <v-flex xs12>
-              <v-text-field
-                label="Address"
-                v-model="address"
-                :error-messages="addressErrors"
-                @input="$v.address.$touch()"
-                @blur="$v.address.$touch()"
-                multi-line
-                required
-              ></v-text-field>
-            </v-flex>
-          </v-layout>
-        </v-container>
+        <div class="container">
+          <form id="form">
+            <v-container grid-list-md>
+              <v-layout row wrap>
+                <v-flex xs6>
+                  <v-text-field
+                    label="Last name"
+                    v-model="lastName"
+                    prepend-icon="face"
+                    :error-messages="lastNameErrors"
+                    @input="$v.lastName.$touch()"
+                    @blur="$v.lastName.$touch()"
+                    required
+                  ></v-text-field>
+                </v-flex>
+                <v-flex xs6>
+                  <v-text-field
+                    label="First name"
+                    v-model="firstName"
+                    prepend-icon="account_circle"
+                    :error-messages="firstNameErrors"
+                    @input="$v.firstName.$touch()"
+                    @blur="$v.firstName.$touch()"
+                    required
+                  ></v-text-field>
+                </v-flex>
+              </v-layout>
+              <v-layout row wrap>
+                <v-flex xs6>
+                  <v-text-field
+                    label="Other name"
+                    v-model="otherName"
+                    prepend-icon="account_box"
+                    :error-messages="otherNameErrors"
+                    @input="$v.otherName.$touch()"
+                    @blur="$v.otherName.$touch()"
+                    required
+                  ></v-text-field>
+                </v-flex>
+                <v-flex xs6>
+                  <v-select
+                    label="Gender"
+                    v-model="gender"
+                    :items="genderEnum"
+                    prepend-icon="accessibility"
+                    :error-messages="genderErrors"
+                    @change="$v.gender.$touch()"
+                    @blur="$v.gender.$touch()"
+                    required
+                  ></v-select>
+                </v-flex>
+              </v-layout>
+              <v-layout row wrap>
+                <v-flex xs6>
+                  <v-dialog
+                    persistent
+                    v-model="modal"
+                    lazy
+                    full-width
+                  >
+                    <v-text-field
+                      slot="activator"
+                      label="Date of birth"
+                      v-model="dateOfBirth"
+                      prepend-icon="event"
+                      readonly
+                      :error-messages="dateOfBirthErrors"
+                      @change="$v.dateOfBirth.$touch()"
+                      @blur="$v.dateOfBirth.$touch()"
+                      required
+                    ></v-text-field>
+                    <v-date-picker v-model="dateOfBirth" scrollable actions>
+                      <template scope="{ save, cancel }">
+                        <v-card-actions>
+                          <v-spacer></v-spacer>
+                          <v-btn flat color="primary" @click="cancel">Cancel</v-btn>
+                          <v-btn flat color="primary" @click="save">OK</v-btn>
+                        </v-card-actions>
+                      </template>
+                    </v-date-picker>
+                  </v-dialog>
+                </v-flex>
+                <v-flex xs6>
+                  <v-select
+                    label="Nationality"
+                    prepend-icon="map"
+                    v-model="nationality"
+                    :items="nationalityEnum"
+                    :error-messages="nationalityErrors"
+                    @change="$v.nationality.$touch()"
+                    @blur="$v.nationality.$touch()"
+                    required
+                  ></v-select>
+                </v-flex>
+              </v-layout>
+              <v-layout row wrap>
+                <v-flex xs6>
+                  <v-select
+                    label="Session of admission"
+                    v-model="sessionOfAdmission"
+                    prepend-icon="class"
+                    :items="sessionOfAdmissionEnum"
+                    :error-messages="sessionOfAdmissionErrors"
+                    @change="$v.sessionOfAdmission.$touch()"
+                    @blur="$v.sessionOfAdmission.$touch()"
+                    required
+                  ></v-select>
+                </v-flex>
+                <v-flex xs6>
+                  <v-menu
+                    lazy
+                    :close-on-content-click="false"
+                    v-model="menu"
+                    transition="scale-transition"
+                    offset-y
+                    full-width
+                    :nudge-right="40"
+                    max-width="290px"
+                    min-width="290px"
+                    :error-messages="dateOfAdmissionErrors"
+                    @change="$v.dateOfAdmission.$touch()"
+                    @blur="$v.dateOfAdmission.$touch()"
+                  >
+                    <v-text-field
+                      slot="activator"
+                      label="Date of admission"
+                      v-model=" dateOfAdmission"
+                      prepend-icon="event"
+                      readonly
+                    ></v-text-field>
+                    <v-date-picker v-model="dateOfAdmission" no-title scrollable actions>
+                      <template scope="{ save, cancel }">
+                        <v-card-actions>
+                          <v-spacer></v-spacer>
+                          <v-btn flat color="primary" @click="cancel">Cancel</v-btn>
+                          <v-btn flat color="primary" @click="save">OK</v-btn>
+                        </v-card-actions>
+                      </template>
+                    </v-date-picker>
+                  </v-menu>
+                </v-flex>
+              </v-layout>
+              <v-layout row wrap>
+                <v-flex xs6>
+                  <v-select
+                    label="State of origin"
+                    v-model="stateOfOrigin"
+                    prepend-icon="pin_drop"
+                    :items="stateEnum"
+                    :error-messages=" stateOfOriginErrors"
+                    @change="$v.stateOfOrigin.$touch()"
+                    @blur="$v.stateOfOrigin.$touch()"
+                    required
+                  ></v-select>
+                </v-flex>
+                <v-flex xs6>
+                  <v-select
+                    label="religion"
+                    v-model="religion"
+                    prepend-icon="wc"
+                    :items="religionEnum"
+                    :error-messages="religionErrors"
+                    @change="$v.religion.$touch()"
+                    @blur="$v.religion.$touch()"
+                    required
+                  ></v-select>
+                </v-flex>
+              </v-layout>
+              <v-layout row wrap>
+                <v-flex xs6>
+                  <v-text-field
+                    label="Phone number"
+                    v-model="phone"
+                    prepend-icon="phone_android"
+                    :error-messages="phoneErrors"
+                    :counter="11"
+                    @input="$v.phone.$touch()"
+                    @blur="$v.phone.$touch()"
+                    required
+                  ></v-text-field>
+                </v-flex>
+                <v-flex xs6>
+                  <v-text-field
+                    label="city"
+                    v-model="city"
+                    prepend-icon="location_city"
+                    :error-messages="cityErrors"
+                    @input="$v.city.$touch()"
+                    @blur="$v.city.$touch()"
+                    required
+                  ></v-text-field>
+                </v-flex>
+              </v-layout>
+              <v-layout row wrap>
+                <v-flex xs6>
+                  <v-select
+                    label="State"
+                    v-model="state"
+                    prepend-icon="domain"
+                    :items="stateEnum"
+                    :error-messages=" stateErrors"
+                    @change="$v.state.$touch()"
+                    @blur="$v.state.$touch()"
+                    required
+                  ></v-select>
+                </v-flex>
+                <v-flex xs6>
+                  <v-text-field
+                    label="E-mail"
+                    v-model="email"
+                    prepend-icon="email"
+                    :error-messages="emailErrors"
+                    @input="$v.email.$touch()"
+                    @blur="$v.email.$touch()"
+                    required
+                  ></v-text-field>
+                </v-flex>
+              </v-layout>
+              <v-layout row wrap>
+                <v-flex xs12>
+                  <v-text-field
+                    label="Address"
+                    v-model="address"
+                    prepend-icon="my_location"
+                    :error-messages="addressErrors"
+                    @input="$v.address.$touch()"
+                    @blur="$v.address.$touch()"
+                    multi-line
+                    required
+                  ></v-text-field>
+                </v-flex>
+              </v-layout>
+            </v-container>
 
-        <v-btn @click="submit">submit</v-btn>
-        <v-btn @click="clear">clear</v-btn>
-      </form>
-    </div>
-  </v-card>
-  </transition>
-</div>
+            <v-btn @click="submit">submit</v-btn>
+            <v-btn @click="clear">clear</v-btn>
+          </form>
+        </div>
+      </v-card>
+    </transition>
+  </div>
 </template>
 
 <script>
@@ -388,9 +400,8 @@
         }).then(() => {
           this.snackbar = true
           return this.clear()
-        }).catch((err) => {
-//          this.snackbarError = true
-          alert(err)
+        }).catch(() => {
+          this.snackbarError = true
         })
       },
       clear () {

@@ -1,9 +1,6 @@
 <template>
-
-   <div>
-     <!--<v-progress-circular indeterminate color="primary" v-if="loading"></v-progress-circular>-->
-     <!--<v-progress-linear v-bind:indeterminate="true" v-if="loading"></v-progress-linear>-->
-     <v-snackbar
+  <div>
+    <v-snackbar
       :timeout="timeout"
       class="green lighten-1"
       :top="y === 'top'"
@@ -32,6 +29,7 @@
       <v-btn flat  @click.native="snackbarError= false">Close</v-btn>
     </v-snackbar>
     <transition appear>
+      <v-progress-circular indeterminate color="primary" v-if="loading"></v-progress-circular>
       <v-card>
         <v-card-media src="https://hdqwalls.com/wallpapers/material-design-blue-and-white-to.jpg" height="200px">
           <v-layout column align-center justify-center>
@@ -47,20 +45,24 @@
                 <v-flex xs6>
                   <v-text-field
                     label="Last name"
-                    v-model= this.Student.lastName
-                    :error-messages="lastNameErrors"
-                    @input="$v.lastName.$touch()"
-                    @blur="$v.lastName.$touch()"
+                    v-model= Student.lastName
+                    prepend-icon="face"
+                    lazy-validation= true
+                    :error-messages="newLastNameErrors"
+                    @input="$v.newLastName.$touch()"
+                    @blur="$v.newLastName.$touch()"
+                    value="jdjfgpjfgpojsgjpsjgopsdjgsdprf"
                     required
                   ></v-text-field>
                 </v-flex>
                 <v-flex xs6>
                   <v-text-field
                     label="First name"
-                    v-model=this.Student.firstName
-                    :error-messages="firstNameErrors"
-                    @input="$v.firstName.$touch()"
-                    @blur="$v.firstName.$touch()"
+                    v-model= Student.firstName
+                    prepend-icon="account_circle"
+                    :error-messages="newFirstNameErrors"
+                    @input="$v.newFirstName.$touch()"
+                    @blur="$v.newFirstName.$touch()"
                     required
                   ></v-text-field>
                 </v-flex>
@@ -69,21 +71,23 @@
                 <v-flex xs6>
                   <v-text-field
                     label="Other name"
-                    v-model= this.Student.otherName
-                    :error-messages="otherNameErrors"
-                    @input="$v.otherName.$touch()"
-                    @blur="$v.otherName.$touch()"
+                    v-model= Student.otherName
+                    prepend-icon="account_box"
+                    :error-messages="newOtherNameErrors"
+                    @input="$v.newOtherName.$touch()"
+                    @blur="$v.newOtherName.$touch()"
                     required
                   ></v-text-field>
                 </v-flex>
                 <v-flex xs6>
                   <v-select
                     label="Gender"
-                    v-model= this.Student.gender
-                    :items="genderEnum"
-                    :error-messages="genderErrors"
-                    @change="$v.gender.$touch()"
-                    @blur="$v.gender.$touch()"
+                    v-model= Student.gender
+                    prepend-icon="accessibility"
+                    :items="newGenderEnum"
+                    :error-messages="newGenderErrors"
+                    @change="$v.newGender.$touch()"
+                    @blur="$v.newGender.$touch()"
                     required
                   ></v-select>
                 </v-flex>
@@ -99,15 +103,15 @@
                     <v-text-field
                       slot="activator"
                       label="Date of birth"
-                      v-model= this.Student.dateOfBirth
+                      v-model= Student.dateOfBirth
                       prepend-icon="event"
                       readonly
-                      :error-messages="dateOfBirthErrors"
-                      @change="$v.dateOfBirth.$touch()"
-                      @blur="$v.dateOfBirth.$touch()"
+                      :error-messages="newDateOfBirthErrors"
+                      @change="$v.newDateOfBirth.$touch()"
+                      @blur="$v.newDateOfBirth.$touch()"
                       required
                     ></v-text-field>
-                    <v-date-picker v-model="dateOfBirth" scrollable actions>
+                    <v-date-picker v-model="Student.dateOfBirth" scrollable actions>
                       <template scope="{ save, cancel }">
                         <v-card-actions>
                           <v-spacer></v-spacer>
@@ -122,11 +126,11 @@
                   <v-select
                     label="Nationality"
                     prepend-icon="map"
-                    v-model= this.Student.nationality
-                    :items="nationalityEnum"
-                    :error-messages="nationalityErrors"
-                    @change="$v.nationality.$touch()"
-                    @blur="$v.nationality.$touch()"
+                    v-model= Student.nationality
+                    :items="newNationalityEnum"
+                    :error-messages="newNationalityErrors"
+                    @change="$v.newNationality.$touch()"
+                    @blur="$v.newNationality.$touch()"
                     required
                   ></v-select>
                 </v-flex>
@@ -135,11 +139,12 @@
                 <v-flex xs6>
                   <v-select
                     label="Session of admission"
-                    v-model= this.Student.sessionOfAdmission
-                    :items="sessionOfAdmissionEnum"
-                    :error-messages="sessionOfAdmissionErrors"
-                    @change="$v.sessionOfAdmission.$touch()"
-                    @blur="$v.sessionOfAdmission.$touch()"
+                    v-model= Student.sessionOfAdmission
+                    prepend-icon="class"
+                    :items="newSessionOfAdmissionEnum"
+                    :error-messages="newSessionOfAdmissionErrors"
+                    @change="$v.newSessionOfAdmission.$touch()"
+                    @blur="$v.newSessionOfAdmission.$touch()"
                     required
                   ></v-select>
                 </v-flex>
@@ -154,18 +159,18 @@
                     :nudge-right="40"
                     max-width="290px"
                     min-width="290px"
-                    :error-messages="dateOfAdmissionErrors"
-                    @change="$v.dateOfAdmission.$touch()"
-                    @blur="$v.dateOfAdmission.$touch()"
+                    :error-messages="newDateOfAdmissionErrors"
+                    @change="$v.newDateOfAdmission.$touch()"
+                    @blur="$v.newDateOfAdmission.$touch()"
                   >
                     <v-text-field
                       slot="activator"
                       label="Date of admission"
-                      v-model= this.Student.dateOfAdmission
+                      v-model= Student.dateOfAdmission
                       prepend-icon="event"
                       readonly
                     ></v-text-field>
-                    <v-date-picker v-model="dateOfAdmission" no-title scrollable actions>
+                    <v-date-picker v-model="Student.dateOfAdmission" no-title scrollable actions>
                       <template scope="{ save, cancel }">
                         <v-card-actions>
                           <v-spacer></v-spacer>
@@ -181,22 +186,24 @@
                 <v-flex xs6>
                   <v-select
                     label="State of origin"
-                    v-model= this.Student.stateOfOrigin
-                    :items="stateEnum"
-                    :error-messages=" stateOfOriginErrors"
-                    @change="$v.stateOfOrigin.$touch()"
-                    @blur="$v.stateOfOrigin.$touch()"
+                    v-model= Student.stateOfOrigin
+                    prepend-icon="pin_drop"
+                    :items="newStateEnum"
+                    :error-messages=" newStateOfOriginErrors"
+                    @change="$v.newStateOfOrigin.$touch()"
+                    @blur="$v.newStateOfOrigin.$touch()"
                     required
                   ></v-select>
                 </v-flex>
                 <v-flex xs6>
                   <v-select
-                    label="religion"
-                    v-model= this.Student.religion
-                    :items="religionEnum"
-                    :error-messages="religionErrors"
-                    @change="$v.religion.$touch()"
-                    @blur="$v.religion.$touch()"
+                    label="Religion"
+                    v-model= Student.religion
+                    prepend-icon="wc"
+                    :items="newReligionEnum"
+                    :error-messages="newReligionErrors"
+                    @change="$v.newReligion.$touch()"
+                    @blur="$v.newReligion.$touch()"
                     required
                   ></v-select>
                 </v-flex>
@@ -205,21 +212,23 @@
                 <v-flex xs6>
                   <v-text-field
                     label="Phone number"
-                    v-model= this.Student.phone
-                    :error-messages="phoneErrors"
+                    v-model= Student.phone
+                    prepend-icon="phone_android"
+                    :error-messages="newPhoneErrors"
                     :counter="11"
-                    @input="$v.phone.$touch()"
-                    @blur="$v.phone.$touch()"
+                    @input="$v.newPhone.$touch()"
+                    @blur="$v.newPhone.$touch()"
                     required
                   ></v-text-field>
                 </v-flex>
                 <v-flex xs6>
                   <v-text-field
-                    label="city"
-                    v-model= this.Student.city
-                    :error-messages="cityErrors"
-                    @input="$v.city.$touch()"
-                    @blur="$v.city.$touch()"
+                    label="City"
+                    v-model= Student.city
+                    prepend-icon="location_city"
+                    :error-messages="newCityErrors"
+                    @input="$v.newCity.$touch()"
+                    @blur="$v.newCity.$touch()"
                     required
                   ></v-text-field>
                 </v-flex>
@@ -228,21 +237,23 @@
                 <v-flex xs6>
                   <v-select
                     label="State"
-                    v-model= this.Student.stateOfOrigin
-                    :items="stateEnum"
-                    :error-messages=" stateErrors"
-                    @change="$v.state.$touch()"
-                    @blur="$v.state.$touch()"
+                    v-model= Student.state
+                    prepend-icon="domain"
+                    :items="newStateEnum"
+                    :error-messages=" newStateErrors"
+                    @change="$v.newState.$touch()"
+                    @blur="$v.newState.$touch()"
                     required
                   ></v-select>
                 </v-flex>
                 <v-flex xs6>
                   <v-text-field
                     label="E-mail"
-                    v-model= this.Student.email
-                    :error-messages="emailErrors"
-                    @input="$v.email.$touch()"
-                    @blur="$v.email.$touch()"
+                    v-model= Student.email
+                    prepend-icon="email"
+                    :error-messages="newEmailErrors"
+                    @input="$v.newEmail.$touch()"
+                    @blur="$v.newEmail.$touch()"
                     required
                   ></v-text-field>
                 </v-flex>
@@ -251,10 +262,11 @@
                 <v-flex xs12>
                   <v-text-field
                     label="Address"
-                    v-model= this.Student.address
-                    :error-messages="addressErrors"
-                    @input="$v.address.$touch()"
-                    @blur="$v.address.$touch()"
+                    v-model= Student.address
+                    prepend-icon="my_location"
+                    :error-messages="newAddressErrors"
+                    @input="$v.newAddress.$touch()"
+                    @blur="$v.newAddress.$touch()"
                     multi-line
                     required
                   ></v-text-field>
@@ -262,79 +274,83 @@
               </v-layout>
             </v-container>
 
-            <v-btn @click="submit">submit</v-btn>
-            <v-btn @click="clear">clear</v-btn>
+            <v-btn @click="update">update</v-btn>
+            <v-btn class="error" dark @click.stop="dialog3 = true">delete</v-btn>
           </form>
         </div>
       </v-card>
     </transition>
+     <v-dialog v-model="dialog3">
+            <v-card>
+        <v-card-title>
+           <v-icon>warning</v-icon>
+          <v-spacer></v-spacer>
+          </v-card-title>
+              <v-card-text>Are you sure you want to delete student?</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="green darken-1" flat="flat" @click.native="deleteStudent">Yes</v-btn>
+          <v-btn color="green darken-1" flat="flat" @click.native="dialog3 = false">Cancel</v-btn>
+        </v-card-actions>
+        </v-card>
+      </v-dialog>
   </div>
 </template>
 
 <script>
-  import { CREATE_STUDENT_MUTATION, STUDENT_QUERY } from '../constants/graphql'
+  import { UPDATE_STUDENT_MUTATION, STUDENT_QUERY, DELETE_STUDENT_MUTATION } from '../constants/graphql'
   import { validationMixin } from 'vuelidate'
   import { required, maxLength, email, numeric } from 'vuelidate/lib/validators'
 
   export default {
-    name: "updateStudent",
+    name: 'updateStudent',
     mixins: [validationMixin],
     validations: {
-      lastName: {required},
-      firstName: {required},
-      otherName: {required},
-      gender: {required},
-      dateOfBirth: {required},
-      nationality: {required},
-      sessionOfAdmission: {required},
-      dateOfAdmission: {required},
-      stateOfOrigin: {required},
-      religion: {required},
-      address: {required},
-      city: {required},
-      state: {required},
-      email: {required, email},
-      phone: {required, numeric, maxLength: maxLength(11)}
+      newLastName: {required},
+      newFirstName: {required},
+      newOtherName: {required},
+      newGender: {required},
+      newDateOfBirth: {required},
+      newNationality: {required},
+      newSessionOfAdmission: {required},
+      newDateOfAdmission: {required},
+      newStateOfOrigin: {required},
+      newReligion: {required},
+      newAddress: {required},
+      newCity: {required},
+      newState: {required},
+      newEmail: {required, email},
+      newPhone: {required, numeric, maxLength: maxLength(11)}
     },
     data () {
       return {
+        dialog3: false,
+        notifications: false,
+        sound: true,
+        widgets: false,
         Student: {},
-        routeParam: this.$route.params.id,
         loading: 0,
-        lastName: '',
-        firstName: '',
-        otherNames: '',
-        dateOfBirth: null,
-        gender: null,
-        nationality: null,
-        sessionOfAdmission: null,
-        dateOfAdmission: null,
-        stateOfOrigin: null,
-        religion: null,
-        address: '',
-        city: null,
-        email: '',
-        phone: '',
-        genderEnum: [
+        paramId: this.$route.params.id,
+        newGenderEnum: [
           'Male',
           'Female'
         ],
-        nationalityEnum: [
+        newNationalityEnum: [
           'Nigeria'
         ],
-        sessionOfAdmissionEnum: [
+        newSessionOfAdmissionEnum: [
           '2005/2006',
           '2006/2007',
           '2007/208',
           '2008/2009',
           '2009/2010'
         ],
-        stateEnum: [
+        newStateEnum: [
           'kano',
           'lagos',
           'Abuja'
         ],
-        religionEnum: [
+        newReligionEnum: [
           'Islam',
           'Christianity',
           'Others'
@@ -351,175 +367,175 @@
         text: 'Hello, I\'m a snackbar'
       }
     },
+    methods: {
+      update () {
+        const {
+          id,
+          lastName,
+          firstName,
+          otherName,
+          gender,
+          dateOfBirth,
+          nationality,
+          sessionOfAdmission,
+          dateOfAdmission,
+          stateOfOrigin,
+          religion,
+          address,
+          city,
+          state,
+          email,
+          phone,
+        } = this.Student
+        this.$v.$touch()
+        this.$apollo.mutate({
+          mutation: UPDATE_STUDENT_MUTATION,
+          variables: {
+            id,
+            newLastName: lastName,
+            newFirstName: firstName,
+            newOtherName: otherName,
+            newGender: gender,
+            newDateOfBirth: dateOfBirth,
+            newNationality: nationality,
+            newSessionOfAdmission: sessionOfAdmission,
+            newDateOfAdmission: dateOfAdmission,
+            newStateOfOrigin: stateOfOrigin,
+            newReligion: religion,
+            newAddress: address,
+            newCity: city,
+            newState: state,
+            newEmail: email,
+            newPhone: phone
+          }
+        }).then(() => {
+          this.snackbar = true
+        }).catch(() => {
+          this.snackbarError = true
+        })
+      },
+      deleteStudent () {
+        const { id } = this.Student
+        this.$apollo.mutate({
+          mutation: DELETE_STUDENT_MUTATION,
+          variables: {
+            id
+          }
+        }).then(() => {
+          this.$router.push({path: '/students'})
+        }).catch((error) => {
+          this.snackbarError = true
+          alert(error)
+        })
+      }
+    },
     apollo: {
       Student: {
         query: STUDENT_QUERY,
         loadingKey: 'loading',
         variables () {
           return {
-            id: this.routeParam
+            id: this.paramId
           }
+        },
+        result ({ data }) {
+          this.Student = Object.assign({}, data.Student)
         }
+      }
+    },
+    computed: {
+      newLastNameErrors () {
+        const errors = []
+        if (this.$v.newLastName.$dirty) return errors
+        this.$v.newLastName.required && errors.push('Last name is required.')
+        return errors
       },
-      methods: {
-        submit () {
-          this.$v.$touch()
-          const {
-            lastName,
-            firstName,
-            otherNames,
-            gender,
-            dateOfBirth,
-            nationality,
-            sessionOfAdmission,
-            dateOfAdmission,
-            stateOfOrigin,
-            religion,
-            address,
-            city,
-            state,
-            email,
-            phone
-          } = this.$data
-          this.$apollo.mutate({
-            mutation: CREATE_STUDENT_MUTATION,
-            variables: {
-              lastName,
-              firstName,
-              otherNames,
-              gender,
-              dateOfBirth,
-              nationality,
-              sessionOfAdmission,
-              dateOfAdmission,
-              stateOfOrigin,
-              religion,
-              address,
-              city,
-              state,
-              email,
-              phone
-            }
-          }).then(() => {
-            this.snackbar = true
-            return this.clear()
-          }).catch(() => {
-            this.snackbarError = true
-          })
-        },
-        clear () {
-          this.$v.$reset()
-          this.lastName = ''
-          this.firstName = ''
-          this.otherName = ''
-          this.dateOfBirth = null
-          this.gender = null
-          this.nationality = null
-          this.sessionOfAdmission = null
-          this.dateOfAdmission = null
-          this.stateOfOrigin = null
-          this.religion = null
-          this.address = ''
-          this.city = null
-          this.state = null
-          this.email = ''
-          this.phone = ''
-        }
+      newFirstNameErrors () {
+        const errors = []
+        if (this.$v.newFirstName.$dirty) return errors
+        this.$v.newFirstName.required && errors.push('First name is required.')
+        return errors
       },
-      computed: {
-        lastNameErrors () {
-          const errors = []
-          if (!this.$v.lastName.$dirty) return errors
-          !this.$v.lastName.required && errors.push('Last name is required.')
-          return errors
-        },
-        firstNameErrors () {
-          const errors = []
-          if (!this.$v.lastName.$dirty) return errors
-          !this.$v.firstName.required && errors.push('First name is required.')
-          return errors
-        },
-        otherNameErrors () {
-          const errors = []
-          if (!this.$v.otherName.$dirty) return errors
-          !this.$v.otherName.required && errors.push('Other name is required.')
-          return errors
-        },
-        genderErrors () {
-          const errors = []
-          if (!this.$v.gender.$dirty) return errors
-          !this.$v.gender.required && errors.push('Gender name is required.')
-          return errors
-        },
-        dateOfBirthErrors () {
-          const errors = []
-          if (!this.$v.dateOfBirth.$dirty) return errors
-          !this.$v.dateOfBirth.required && errors.push('Date f birth is required.')
-          return errors
-        },
-        nationalityErrors () {
-          const errors = []
-          if (!this.$v.nationality.$dirty) return errors
-          !this.$v.nationality.required && errors.push('Nationality is required.')
-          return errors
-        },
-        sessionOfAdmissionErrors () {
-          const errors = []
-          if (!this.$v.sessionOfAdmission.$dirty) return errors
-          !this.$v.sessionOfAdmission.required && errors.push('Session of admission is required.')
-          return errors
-        },
-        dateOfAdmissionErrors () {
-          const errors = []
-          if (!this.$v.dateOfAdmission.$dirty) return errors
-          !this.$v.dateOfAdmission.required && errors.push('Date of admission is required.')
-          return errors
-        },
-        stateOfOriginErrors () {
-          const errors = []
-          if (!this.$v.stateOfOrigin.$dirty) return errors
-          !this.$v.stateOfOrigin.required && errors.push('State of origin is required.')
-          return errors
-        },
-        religionErrors () {
-          const errors = []
-          if (!this.$v.religion.$dirty) return errors
-          !this.$v.religion.required && errors.push('Religion of origin is required.')
-          return errors
-        },
-        addressErrors () {
-          const errors = []
-          if (!this.$v.address.$dirty) return errors
-          !this.$v.address.required && errors.push('Address is required.')
-          return errors
-        },
-        cityErrors () {
-          const errors = []
-          if (!this.$v.city.$dirty) return errors
-          !this.$v.city.required && errors.push('City is required.')
-          return errors
-        },
-        stateErrors () {
-          const errors = []
-          if (!this.$v.state.$dirty) return errors
-          !this.$v.state.required && errors.push('State of origin is required.')
-          return errors
-        },
-        emailErrors () {
-          const errors = []
-          if (!this.$v.email.$dirty) return errors
-          !this.$v.email.email && errors.push('Must be valid e-mail')
-          !this.$v.email.required && errors.push('E-mail is required')
-          return errors
-        },
-        phoneErrors () {
-          const errors = []
-          if (!this.$v.phone.$dirty) return errors
-          !this.$v.phone.numeric && errors.push('Must be valid phone number')
-          !this.$v.phone.maxLength && errors.push('Phone number must be at most 11 characters long')
-          !this.$v.phone.required && errors.push('Phone of origin is required.')
-          return errors
-        }
+      newOtherNameErrors () {
+        const errors = []
+        if (this.$v.newOtherName.$dirty) return errors
+        this.$v.newOtherName.required && errors.push('Other name is required.')
+        return errors
+      },
+      newGenderErrors () {
+        const errors = []
+        if (this.$v.newGender.$dirty) return errors
+        this.$v.newGender.required && errors.push('newGender name is required.')
+        return errors
+      },
+      newDateOfBirthErrors () {
+        const errors = []
+        if (this.$v.newDateOfBirth.$dirty) return errors
+        this.$v.newDateOfBirth.required && errors.push('Date f birth is required.')
+        return errors
+      },
+      newNationalityErrors () {
+        const errors = []
+        if (this.$v.newNationality.$dirty) return errors
+        this.$v.newNationality.required && errors.push('newNationality is required.')
+        return errors
+      },
+      newSessionOfAdmissionErrors () {
+        const errors = []
+        if (this.$v.newSessionOfAdmission.$dirty) return errors
+        this.$v.newSessionOfAdmission.required && errors.push('Session of admission is required.')
+        return errors
+      },
+      newDateOfAdmissionErrors () {
+        const errors = []
+        if (this.$v.newDateOfAdmission.$dirty) return errors
+        this.$v.newDateOfAdmission.required && errors.push('Date of admission is required.')
+        return errors
+      },
+      newStateOfOriginErrors () {
+        const errors = []
+        if (this.$v.newStateOfOrigin.$dirty) return errors
+        this.$v.newStateOfOrigin.required && errors.push('newState of origin is required.')
+        return errors
+      },
+      newReligionErrors () {
+        const errors = []
+        if (this.$v.newReligion.$dirty) return errors
+        this.$v.newReligion.required && errors.push('newReligion of origin is required.')
+        return errors
+      },
+      newAddressErrors () {
+        const errors = []
+        if (this.$v.newAddress.$dirty) return errors
+        this.$v.newAddress.required && errors.push('newAddress is required.')
+        return errors
+      },
+      newCityErrors () {
+        const errors = []
+        if (this.$v.newCity.$dirty) return errors
+        this.$v.newCity.required && errors.push('newCity is required.')
+        return errors
+      },
+      newStateErrors () {
+        const errors = []
+        if (this.$v.newState.$dirty) return errors
+        this.$v.newState.required && errors.push('newState of origin is required.')
+        return errors
+      },
+      newEmailErrors () {
+        const errors = []
+        if (this.$v.newEmail.$dirty) return errors
+        !this.$v.newEmail.email && errors.push('Must be valid e-mail')
+        this.$v.newEmail.required && errors.push('E-mail is required')
+        return errors
+      },
+      newPhoneErrors () {
+        const errors = []
+        if (this.$v.newPhone.$dirty) return errors
+        !this.$v.newPhone.numeric && errors.push('Must be valid newPhone number')
+        !this.$v.newPhone.maxLength && errors.push('newPhone number must be at most 11 characters long')
+        this.$v.newPhone.required && errors.push('newPhone of origin is required.')
+        return errors
       }
     }
   }

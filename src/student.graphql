@@ -1,6 +1,0 @@
-{
-  Student(id: "59d96cdd29c3e972530d98c0"){
-    id
-    firstName
-  }
-}
