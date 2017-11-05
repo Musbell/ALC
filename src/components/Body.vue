@@ -8,6 +8,9 @@
         <div v-if="this.$route.path == '/'" id="placeholder-container">
           <img src="https://i.pinimg.com/736x/cb/74/ed/cb74ed4cf93e363b83fc527d16ad54d7--illustration-vector-icon-design.jpg"
                alt="placeholder" id="placeholder" />
+          <p></p>
+          <p>Develped with  <v-icon large>favorite</v-icon> by <a href="https://www.github.com/musbell"
+          target="_blank">Musbell</a></p>
         </div>
         <transition name="view" mode="out-in" appear>
           <router-view :key="$route.fullPath">

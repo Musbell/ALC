@@ -22,6 +22,7 @@
       </v-toolbar>
       <v-list class="pt-0" dense>
         <v-divider></v-divider>
+        <router-link to="/">
         <v-list-tile @click="">
           <v-list-tile-action>
             <v-icon>home</v-icon>
@@ -30,14 +31,17 @@
             <v-list-tile-title>Home</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+        </router-link>
+        <router-link to="/students">
         <v-list-tile @click="">
-          <v-list-tile-action>
-            <v-icon>dashboard</v-icon>
+            <v-list-tile-action>
+            <v-icon>person_add</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>Dashboard</v-list-tile-title>
+            <v-list-tile-title>Add student</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+           </router-link>
       </v-list>
     </v-navigation-drawer>
     <v-toolbar fixed dark class="blue darken-3">

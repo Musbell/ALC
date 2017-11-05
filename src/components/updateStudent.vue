@@ -47,11 +47,9 @@
                     label="Last name"
                     v-model= Student.lastName
                     prepend-icon="face"
-                    lazy-validation= true
                     :error-messages="newLastNameErrors"
                     @input="$v.newLastName.$touch()"
                     @blur="$v.newLastName.$touch()"
-                    value="jdjfgpjfgpojsgjpsjgopsdjgsdprf"
                     required
                   ></v-text-field>
                 </v-flex>
@@ -146,6 +144,7 @@
                     @change="$v.newSessionOfAdmission.$touch()"
                     @blur="$v.newSessionOfAdmission.$touch()"
                     required
+                    autocomplete
                   ></v-select>
                 </v-flex>
                 <v-flex xs6>
@@ -193,6 +192,7 @@
                     @change="$v.newStateOfOrigin.$touch()"
                     @blur="$v.newStateOfOrigin.$touch()"
                     required
+                    autocomplete
                   ></v-select>
                 </v-flex>
                 <v-flex xs6>
@@ -244,11 +244,12 @@
                     @change="$v.newState.$touch()"
                     @blur="$v.newState.$touch()"
                     required
+                    autocomplete
                   ></v-select>
                 </v-flex>
                 <v-flex xs6>
                   <v-text-field
-                    label="E-mail"
+                    label="Email"
                     v-model= Student.email
                     prepend-icon="email"
                     :error-messages="newEmailErrors"
@@ -343,12 +344,53 @@
           '2006/2007',
           '2007/208',
           '2008/2009',
-          '2009/2010'
+          '2009/2010',
+          '2010/2011',
+          '2011/2012',
+          '2012/2013',
+          '2013/2014',
+          '2014/2015',
+          '2015/2016',
+          '2016/2017',
+          '2017/2018'
         ],
         newStateEnum: [
-          'kano',
-          'lagos',
-          'Abuja'
+          'Abia',
+          'Adamawa',
+          'Anambra',
+          'Akwa Ibom',
+          'Bauchi',
+          'Bayelsa',
+          'Benue',
+          'Borno',
+          'Cross River',
+          'Delta',
+          'Ebonyi',
+          'Enugu',
+          'Edo',
+          'Ekiti',
+          'Gombe',
+          'Imo',
+          'Jigawa',
+          'Kaduna',
+          'Kano',
+          'Katsina',
+          'Kebbi',
+          'Kogi',
+          'Kwara',
+          'Lagos',
+          'Nasarawa',
+          'Niger',
+          'Ogun',
+          'Ondo',
+          'Osun',
+          'Oyo',
+          'Plateau',
+          'Rivers',
+          'Sokoto',
+          'Taraba',
+          'Yobe',
+          'Zamfara'
         ],
         newReligionEnum: [
           'Islam',
