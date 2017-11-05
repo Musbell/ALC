@@ -131,7 +131,7 @@
         drawer: true,
         fixed: false,
         items: [
-          { icon: 'home', title: 'Home' },
+          { icon: 'home', title: 'Home' }
         ],
         miniVariant: true,
         right: true,
