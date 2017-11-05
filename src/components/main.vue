@@ -69,13 +69,6 @@
       </v-btn>
       <v-toolbar-title v-text="title"></v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn
-        icon
-        dark
-        @click.stop="rightDrawer = !rightDrawer"
-      >
-        <v-icon light>code</v-icon>
-      </v-btn>
     </v-toolbar>
     <main>
       <v-container fluid>
