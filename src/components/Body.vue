@@ -5,8 +5,9 @@
         <StudentList/>
       </v-flex>
       <v-flex d-flex xs12 sm12 md8 lg8>
-        <div v-if="this.$route.path == '/'" id="placeholder">
-          <img src="https://s-media-cache-ak0.pinimg.com/originals/2a/9e/48/2a9e488107b2f1c396dc697a75d91a42.jpg" alt="">
+        <div v-if="this.$route.path == '/'" id="placeholder-container">
+          <img src="https://i.pinimg.com/736x/cb/74/ed/cb74ed4cf93e363b83fc527d16ad54d7--illustration-vector-icon-design.jpg"
+               alt="placeholder" id="placeholder" />
         </div>
         <transition name="view" mode="out-in" appear>
           <router-view :key="$route.fullPath">
@@ -34,5 +35,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+  #placeholder-container{
+    text-align: center;
+  }
 </style>
