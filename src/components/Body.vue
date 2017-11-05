@@ -1,10 +1,10 @@
 <template>
-  <v-container grid-list-lg>
-    <v-layout row>
-      <v-flex xs4>
+  <v-container grid-list-md>
+    <v-layout row wrap>
+      <v-flex d-flex xs12 sm12 md4 lg4>
         <StudentList/>
       </v-flex>
-      <v-flex xs8>
+      <v-flex d-flex xs12 sm12 md8 lg8>
         <div v-if="this.$route.path == '/'" id="placeholder">
           <img src="https://s-media-cache-ak0.pinimg.com/originals/2a/9e/48/2a9e488107b2f1c396dc697a75d91a42.jpg" alt="">
         </div>
@@ -34,7 +34,5 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-#placeholder{
-  margin-left: 100px;
-}
+
 </style>
