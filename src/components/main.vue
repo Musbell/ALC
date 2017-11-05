@@ -6,7 +6,6 @@
       :clipped="clipped"
       v-model="drawer"
       enable-resize-watcherw
-      dark
     >
       <v-toolbar flat class="transparent">
         <v-list class="pa-0">
@@ -25,7 +24,7 @@
         <v-divider></v-divider>
         <v-list-tile @click="">
           <v-list-tile-action>
-            <v-icon dark>home</v-icon>
+            <v-icon>home</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title>Home</v-list-tile-title>
@@ -33,7 +32,7 @@
         </v-list-tile>
         <v-list-tile @click="">
           <v-list-tile-action>
-            <v-icon dark>dashboard</v-icon>
+            <v-icon>dashboard</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title>Dashboard</v-list-tile-title>

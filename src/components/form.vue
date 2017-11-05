@@ -143,6 +143,7 @@
                     @change="$v.sessionOfAdmission.$touch()"
                     @blur="$v.sessionOfAdmission.$touch()"
                     required
+                    autocomplete
                   ></v-select>
                 </v-flex>
                 <v-flex xs6>
@@ -166,6 +167,7 @@
                       v-model=" dateOfAdmission"
                       prepend-icon="event"
                       readonly
+                      :error-messages="dateOfAdmissionErrors"
                     ></v-text-field>
                     <v-date-picker v-model="dateOfAdmission" no-title scrollable actions>
                       <template scope="{ save, cancel }">
@@ -190,6 +192,7 @@
                     @change="$v.stateOfOrigin.$touch()"
                     @blur="$v.stateOfOrigin.$touch()"
                     required
+                    autocomplete
                   ></v-select>
                 </v-flex>
                 <v-flex xs6>
@@ -241,6 +244,7 @@
                     @change="$v.state.$touch()"
                     @blur="$v.state.$touch()"
                     required
+                    autocomplete
                   ></v-select>
                 </v-flex>
                 <v-flex xs6>
@@ -334,12 +338,53 @@
           '2006/2007',
           '2007/208',
           '2008/2009',
-          '2009/2010'
+          '2009/2010',
+          '2010/2011',
+          '2011/2012',
+          '2012/2013',
+          '2013/2014',
+          '2014/2015',
+          '2015/2016',
+          '2016/2017',
+          '2017/2018'
         ],
         stateEnum: [
-          'kano',
-          'lagos',
-          'Abuja'
+          'Abia',
+          'Adamawa',
+          'Anambra',
+          'Akwa Ibom',
+          'Bauchi',
+          'Bayelsa',
+          'Benue',
+          'Borno',
+          'Cross River',
+          'Delta',
+          'Ebonyi',
+          'Enugu',
+          'Edo',
+          'Ekiti',
+          'Gombe',
+          'Imo',
+          'Jigawa',
+          'Kaduna',
+          'Kano',
+          'Katsina',
+          'Kebbi',
+          'Kogi',
+          'Kwara',
+          'Lagos',
+          'Nasarawa',
+          'Niger',
+          'Ogun',
+          'Ondo',
+          'Osun',
+          'Oyo',
+          'Plateau',
+          'Rivers',
+          'Sokoto',
+          'Taraba',
+          'Yobe',
+          'Zamfara'
         ],
         religionEnum: [
           'Islam',
@@ -432,7 +477,7 @@
       },
       firstNameErrors () {
         const errors = []
-        if (!this.$v.lastName.$dirty) return errors
+        if (!this.$v.firstName.$dirty) return errors
         !this.$v.firstName.required && errors.push('First name is required.')
         return errors
       },
